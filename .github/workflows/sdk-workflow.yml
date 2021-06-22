@@ -51,4 +51,4 @@ jobs:
       with:
         name: SDK-LEUART
         path: examples/leuart/leuart.bin
-        retention-days: 5
+        retention-days: 6
