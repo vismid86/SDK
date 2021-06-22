@@ -32,23 +32,23 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: SDK-TX-Test
-        path: examples/tracker/tx.bin
+        path: examples/rf_test/tx/tx.bin
         retention-days: 5
     - name: Archive SDK artifacts SDK-RX-Test
       uses: actions/upload-artifact@v2
       with:
         name: SDK-RX-Test
-        path: examples/tracker/rx.bin
+        path: examples/rf_test/rx/rx.bin
         retention-days: 5
     - name: Archive SDK artifacts UART
       uses: actions/upload-artifact@v2
       with:
         name: SDK-UART
-        path: examples/tracker/uart.bin
+        path: examples/uart/uart.bin
         retention-days: 5
     - name: Archive SDK artifacts LEUART
       uses: actions/upload-artifact@v2
       with:
         name: SDK-LEUART
-        path: examples/tracker/leuart.bin
+        path: examples/leuart/leuart.bin
         retention-days: 5
