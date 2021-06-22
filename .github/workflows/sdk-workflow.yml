@@ -1,0 +1,48 @@
+name: SDK-Workflow
+
+on:
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v2
+    - name: install
+      run: sh install.sh
+    - name: build
+      run: |
+        cd examples/tracker; make
+        cd examples/rf_test/tx; make
+        cd examples/rf_test/rx; make
+        cd examples/uart; make
+        cd examples/leuart; make
+        cd examples/pulse_counter; make
+    - name: Archive SDK artifacts Tracker
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-Tracker
+        path: examples/tracker/tracker.bin
+    - name: Archive SDK artifacts SDK-TX-Test
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-TX-Test
+        path: examples/tracker/tx.bin
+    - name: Archive SDK artifacts SDK-RX-Test
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-RX-Test
+        path: examples/tracker/rx.bin
+    - name: Archive SDK artifacts UART
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-UART
+        path: examples/tracker/uart.bin
+    - name: Archive SDK artifacts LEUART
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-LEUART
+        path: examples/tracker/leuart.bin
