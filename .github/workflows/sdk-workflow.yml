@@ -16,12 +16,12 @@ jobs:
     - name: build
       run: |
         PATH=$(pwd)/tools:/opt/gcc-arm/bin:$PATH
-        cd examples/tracker; make
-        cd examples/rf_test/tx; make
-        cd examples/rf_test/rx; make
-        cd examples/uart; make
-        cd examples/leuart; make
-        cd examples/pulse_counter; make
+        cd examples/tracker; make; cd -
+        cd examples/rf_test/tx; make; cd -
+        cd examples/rf_test/rx; make; cd -
+        cd examples/uart; make; cd -
+        cd examples/leuart; make; cd -
+        cd examples/pulse_counter; make; cd -
     - name: Archive SDK artifacts Tracker
       uses: actions/upload-artifact@v2
       with:
