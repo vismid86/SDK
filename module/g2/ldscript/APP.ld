@@ -13,6 +13,7 @@ MEMORY
 {
   FLASH (rx) : ORIGIN = 0x24800, LENGTH = 34K
   RAM (rwx)  : ORIGIN = 0x20007000, LENGTH = 4K
+  NVRAM (r) : ORIGIN = 0x2C800, LENGTH = 2K
 }
 
 ENTRY(SDKUserAppInit)
@@ -97,7 +98,7 @@ SECTIONS
 
   __etext = .;
 
-  .data : AT (__etext)
+  .data :
   {
     __data_start__ = .;
     *(vtable)
@@ -131,7 +132,7 @@ SECTIONS
     /* All data end */
     __data_end__ = .;
 
-  } > RAM
+  } > RAM AT > FLASH
 
   .bss (NOLOAD):
   {
@@ -163,6 +164,14 @@ SECTIONS
     KEEP(*(.stack*))
   } > RAM
 
+  .user_nvram (NOLOAD):
+  {
+    _NvramStartAddr = .;
+    KEEP(*(user_nvram))
+  } > NVRAM
+
+  _NvramSize = SIZEOF(.user_nvram);
+
   /* Set stack top to end of RAM, and stack limit move down by
    * size of stack_dummy section */
   __StackTop = ORIGIN(RAM) + LENGTH(RAM);
@@ -173,5 +182,5 @@ SECTIONS
   ASSERT(__StackLimit >= __HeapLimit, "RAM overflowed")
 
   /* Check if FLASH usage exceeds FLASH size */
-  ASSERT( LENGTH(FLASH) >= (SIZEOF(.text) + SIZEOF(.data)), "FLASH memory overflowed !")
+  ASSERT( LENGTH(FLASH) >= (SIZEOF(.text) + SIZEOF(.data)) + SIZEOF(.user_nvram), "Application size is too big!")
 }

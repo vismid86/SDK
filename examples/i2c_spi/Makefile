@@ -12,7 +12,7 @@
 # limitations under the License.
 
 
-USING_I2C ?= 1 # Change to 0 to use SPI
+USING_I2C ?= 1# Change to 0 to use SPI
 
 ifeq ($(USING_I2C), 1)
 PROGRAM_NAME = LIS3DH_i2c
