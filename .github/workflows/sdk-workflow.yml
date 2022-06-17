@@ -24,6 +24,7 @@ jobs:
         cd examples/uart; make; cd -
         cd examples/leuart; make; cd -
         cd examples/pulse_counter; make; cd -
+        cd examples/at_modem; make; cd -
     - name: Archive SDK artifacts Tracker
       uses: actions/upload-artifact@v2
       with:
@@ -53,4 +54,10 @@ jobs:
       with:
         name: SDK-LEUART
         path: examples/leuart/leuart.bin
+        retention-days: 365
+    - name: Archive SDK artifacts AT_Modem
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-AT_Modem
+        path: examples/at_modem/at_modem.bin
         retention-days: 365
