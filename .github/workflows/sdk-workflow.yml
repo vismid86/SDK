@@ -1,0 +1,63 @@
+name: SDK-Workflow
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v2
+    - name: install
+      run: bash install.sh
+    - name: build
+      run: |
+        PATH=$(pwd)/tools:/opt/gcc-arm/bin:$PATH
+        cd examples/tracker; make; cd -
+        cd examples/rf_test/tx; make; cd -
+        cd examples/rf_test/rx; make; cd -
+        cd examples/uart; make; cd -
+        cd examples/leuart; make; cd -
+        cd examples/pulse_counter; make; cd -
+        cd examples/at_modem; make; cd -
+    - name: Archive SDK artifacts Tracker
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-Tracker
+        path: examples/tracker/tracker.bin
+        retention-days: 365
+    - name: Archive SDK artifacts SDK-TX-Test
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-TX-Test
+        path: examples/rf_test/tx/tx.bin
+        retention-days: 365
+    - name: Archive SDK artifacts SDK-RX-Test
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-RX-Test
+        path: examples/rf_test/rx/rx.bin
+        retention-days: 365
+    - name: Archive SDK artifacts UART
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-UART
+        path: examples/uart/uart.bin
+        retention-days: 365
+    - name: Archive SDK artifacts LEUART
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-LEUART
+        path: examples/leuart/leuart.bin
+        retention-days: 365
+    - name: Archive SDK artifacts AT_Modem
+      uses: actions/upload-artifact@v2
+      with:
+        name: SDK-AT_Modem
+        path: examples/at_modem/at_modem.bin
+        retention-days: 365
